@@ -1,0 +1,30 @@
+# Dashboard de Performance — Instagram
+
+Relatório mensal em página única (HTML, CSS e JS puros — sem dependências, sem build).
+
+**Acesso:** https://pedrogasparetto.github.io/dashboard-instagram/
+
+## O que tem
+
+- **Comparativo mensal** — cinco gráficos de rosca (curtidas, compartilhamentos, visualizações, novos seguidores e contas alcançadas) comparando dois meses escolhidos nos seletores do topo, com a variação percentual entre eles.
+- **Evolução mensal** — quatro gráficos de barras (alcance, interações, novos seguidores e visualizações) com todos os meses cadastrados.
+- **Formulário de inserção** — botão "＋ Inserir dados" abre o painel lateral para cadastrar, editar, reordenar ou excluir meses.
+- **Exportar / importar JSON** — para levar os dados de um navegador para outro ou guardar uma cópia.
+- **Tema claro e escuro** e layout responsivo.
+
+## Onde os dados ficam
+
+Tudo é salvo no `localStorage` do navegador de quem acessa. Nada é enviado para servidor
+algum e nenhum número fica no repositório — a página publicada abre com os meses zerados.
+Limpar os dados do navegador apaga o que foi cadastrado, então use o **Exportar JSON**
+para manter um backup.
+
+## Sobre a senha
+
+A tela de acesso é uma trava de visualização, não segurança de verdade: a validação roda
+no navegador e qualquer pessoa com acesso ao código-fonte consegue contorná-la. Serve para
+evitar exibição acidental do relatório — não use para proteger informação sigilosa.
+
+## Uso local
+
+Basta abrir o `index.html` no navegador. Não precisa de servidor.
