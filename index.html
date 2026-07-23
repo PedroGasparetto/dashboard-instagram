@@ -95,7 +95,35 @@
   .btn.danger:hover{border-color:#e5484d; color:#e5484d}
 
   /* ---------- section titles ---------- */
-  .sec-head{display:flex; align-items:center; gap:12px; margin:34px 0 16px}
+  /* ---------- abas ---------- */
+  .tabs{
+    position:relative; display:flex; gap:6px; padding:6px;
+    background:var(--surface); border:1px solid var(--line); border-radius:16px;
+    box-shadow:var(--shadow); width:fit-content; max-width:100%; overflow:auto;
+  }
+  .tab{
+    position:relative; z-index:1; display:inline-flex; align-items:center; gap:9px;
+    border:none; background:transparent; cursor:pointer; white-space:nowrap;
+    padding:11px 20px; border-radius:11px; font:inherit; font-size:14px; font-weight:700;
+    color:var(--muted); transition:color .2s;
+  }
+  .tab:hover{color:var(--text)}
+  .tab[aria-selected="true"]{color:#fff}
+  .tab:focus-visible{outline:2px solid var(--o-400); outline-offset:2px}
+  .tab-ink{
+    position:absolute; top:6px; bottom:6px; left:0; width:0; border-radius:11px; z-index:0;
+    background:linear-gradient(140deg, var(--o-400), var(--o-600));
+    box-shadow:0 8px 20px -10px rgba(255,90,0,.85);
+    transition:transform .32s cubic-bezier(.3,1,.4,1), width .32s cubic-bezier(.3,1,.4,1);
+  }
+  .panel[hidden]{display:none}
+  .panel{animation:fade .32s ease}
+  @keyframes fade{from{opacity:0; transform:translateY(8px)} to{opacity:1; transform:none}}
+  @media (prefers-reduced-motion: reduce){
+    .panel{animation:none} .tab-ink{transition:none}
+  }
+
+  .sec-head{display:flex; align-items:center; gap:12px; margin:22px 0 16px}
   .sec-head h2{
     margin:0; font-size:13px; font-weight:800; letter-spacing:.14em;
     text-transform:uppercase; color:var(--o-600);
@@ -357,23 +385,40 @@
     <button class="btn ghost" id="lockBtn" title="Bloquear a tela">🔒 Sair</button>
   </header>
 
+  <!-- abas -->
+  <nav class="tabs" role="tablist" aria-label="Seções do relatório">
+    <button class="tab" role="tab" id="tab-comparativo" aria-controls="panel-comparativo" data-tab="comparativo">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 3v9l6.4 4.2"/></svg>
+      Comparativo mensal
+    </button>
+    <button class="tab" role="tab" id="tab-evolucao" aria-controls="panel-evolucao" data-tab="evolucao">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 3v18h18"/><rect x="7" y="10" width="3" height="7"/><rect x="13" y="6" width="3" height="11"/></svg>
+      Evolução mensal
+    </button>
+    <span class="tab-ink" id="tabInk"></span>
+  </nav>
+
   <!-- comparativo -->
-  <div class="sec-head">
-    <h2>Comparativo mensal</h2>
-    <div class="rule"></div>
-    <div class="sel-row">
-      <label class="f"><span>Mês base</span><select id="selA"></select></label>
-      <label class="f"><span>Mês comparado</span><select id="selB"></select></label>
+  <section class="panel" id="panel-comparativo" role="tabpanel" aria-labelledby="tab-comparativo">
+    <div class="sec-head">
+      <h2>Comparativo mensal</h2>
+      <div class="rule"></div>
+      <div class="sel-row">
+        <label class="f"><span>Mês base</span><select id="selA"></select></label>
+        <label class="f"><span>Mês comparado</span><select id="selB"></select></label>
+      </div>
     </div>
-  </div>
-  <div id="donutsHost"></div>
+    <div id="donutsHost"></div>
+  </section>
 
   <!-- séries -->
-  <div class="sec-head">
-    <h2>Evolução mensal</h2>
-    <div class="rule"></div>
-  </div>
-  <div id="barsHost"></div>
+  <section class="panel" id="panel-evolucao" role="tabpanel" aria-labelledby="tab-evolucao" hidden>
+    <div class="sec-head">
+      <h2>Evolução mensal</h2>
+      <div class="rule"></div>
+    </div>
+    <div id="barsHost"></div>
+  </section>
 </div>
 
 <!-- ============ DRAWER FORM ============ -->
@@ -811,6 +856,41 @@ $('#themeBtn').addEventListener('click', ()=>{
 });
 const savedTheme = localStorage.getItem(KEY+':theme');
 if(savedTheme) document.documentElement.setAttribute('data-theme', savedTheme);
+
+/* ============ abas ============ */
+const TAB_KEY = KEY + ':tab';
+const tabs = [...document.querySelectorAll('.tab')];
+
+function moveInk(){
+  const active = document.querySelector('.tab[aria-selected="true"]');
+  const ink = $('#tabInk');
+  if(!active || !active.offsetWidth){ ink.style.width = '0'; return; }
+  ink.style.width = active.offsetWidth + 'px';
+  ink.style.transform = `translateX(${active.offsetLeft}px)`;
+}
+function showTab(name, remember = true){
+  tabs.forEach(t=>{
+    const on = t.dataset.tab === name;
+    t.setAttribute('aria-selected', on);
+    t.tabIndex = on ? 0 : -1;
+    document.getElementById('panel-' + t.dataset.tab).hidden = !on;
+  });
+  moveInk();
+  if(remember) localStorage.setItem(TAB_KEY, name);
+}
+tabs.forEach(t=> t.addEventListener('click', ()=> showTab(t.dataset.tab)));
+$('.tabs').addEventListener('keydown', e=>{
+  if(e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+  const i = tabs.findIndex(t=>t.getAttribute('aria-selected')==='true');
+  const next = tabs[(i + (e.key==='ArrowRight'?1:tabs.length-1)) % tabs.length];
+  showTab(next.dataset.tab); next.focus();
+});
+addEventListener('resize', moveInk);
+showTab(localStorage.getItem(TAB_KEY) || 'comparativo', false);
+
+/* a aba fica oculta enquanto a tela está travada: recalcula ao liberar */
+const _unlock = unlock;
+unlock = function(){ _unlock(); requestAnimationFrame(moveInk); };
 
 clearForm();
 render();
