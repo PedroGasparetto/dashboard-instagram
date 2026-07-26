@@ -1,13 +1,17 @@
-# Dashboard de Performance — Instagram
+# Dashboards de Performance — Redes Sociais
 
-Relatório mensal em página única (HTML, CSS e JS puros — sem dependências, sem build).
+Relatórios mensais em página única (HTML, CSS e JS puros — sem dependências, sem build).
+Há dois painéis, com um botão no topo para alternar entre eles:
 
-**Acesso:** https://pedrogasparetto.github.io/dashboard-instagram/
+- **Instagram** (paleta laranja): https://pedrogasparetto.github.io/dashboard-instagram/
+- **LinkedIn** (paleta azul): https://pedrogasparetto.github.io/dashboard-instagram/linkedin.html
 
 ## O que tem
 
-- **Comparativo mensal** — cinco gráficos de rosca (curtidas, compartilhamentos, visualizações, novos seguidores e contas alcançadas) comparando dois meses escolhidos nos seletores do topo, com a variação percentual entre eles.
-- **Evolução mensal** — quatro gráficos de barras (alcance, interações, novos seguidores e visualizações) com todos os meses cadastrados.
+- **Comparativo mensal** — gráficos de rosca comparando dois meses escolhidos nos seletores do topo, com a variação percentual entre eles.
+  - Instagram: curtidas, compartilhamentos, visualizações, novos seguidores e contas alcançadas.
+  - LinkedIn: impressões, comentários, compartilhamentos, seguidores e visualizações.
+- **Evolução mensal** — gráficos de barras com todos os meses cadastrados (no LinkedIn, as interações somam comentários + compartilhamentos).
 - **Formulário de inserção** — botão "＋ Inserir dados" abre o painel lateral para cadastrar, editar, reordenar ou excluir meses.
 - **Exportar / importar JSON** — para levar os dados de um navegador para outro ou guardar uma cópia.
 - **Tema claro e escuro** e layout responsivo.
