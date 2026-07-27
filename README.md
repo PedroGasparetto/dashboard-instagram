@@ -3,8 +3,12 @@
 Relatórios mensais em página única (HTML, CSS e JS puros — sem dependências, sem build).
 Há dois painéis, com um botão no topo para alternar entre eles:
 
-- **Instagram** (paleta laranja): https://pedrogasparetto.github.io/dashboard-instagram/
+- **Instagram · Conta 1** (paleta laranja): https://pedrogasparetto.github.io/dashboard-instagram/
+- **Instagram · Conta 2** (paleta laranja): https://pedrogasparetto.github.io/dashboard-instagram/instagram2.html
 - **LinkedIn** (paleta azul): https://pedrogasparetto.github.io/dashboard-instagram/linkedin.html
+
+Cada painel guarda seus próprios dados no navegador (chaves de armazenamento
+separadas), então as contas não se misturam.
 
 ## O que tem
 

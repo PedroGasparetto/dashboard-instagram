@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Dashboard Instagram — AG Taxtech</title>
+<title>Dashboard Instagram (Conta 2) — AG Taxtech</title>
 <style>
   :root{
     --o-500:#ff5a00;
@@ -379,7 +379,7 @@
       <p class="gate-err" id="gateErr"></p>
       <button class="btn primary" type="submit" style="justify-content:center">Entrar</button>
     </form>
-    <p class="gate-foot">Relatório de performance — Instagram</p>
+    <p class="gate-foot">Relatório de performance — Instagram (Conta 2)</p>
   </div>
 </div>
 
@@ -391,12 +391,12 @@
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 3v18h18"/><path d="M7 15l4-5 3 3 5-7"/></svg>
       </div>
       <div>
-        <h1>Relatório de Performance — Instagram</h1>
+        <h1>Relatório de Performance — Instagram · Conta 2</h1>
         <p id="brandSub">AG Taxtech</p>
       </div>
     </div>
     <div class="spacer"></div>
-    <a class="btn ghost" href="instagram2.html" title="Ver o painel da 2ª conta do Instagram">↔ Instagram 2</a>
+    <a class="btn ghost" href="index.html" title="Ver o painel da 1ª conta do Instagram">↔ Instagram 1</a>
     <a class="btn ghost" href="linkedin.html" title="Ver o painel do LinkedIn">↔ LinkedIn</a>
     <button class="btn ghost" id="themeBtn" title="Alternar tema">🌗 Tema</button>
     <button class="btn ghost" id="exportBtn">⤓ Exportar JSON</button>
@@ -517,16 +517,16 @@ const hash = s => { let h = 5381; for(const c of s) h = ((h*33) ^ c.charCodeAt(0
 
 function unlock(){
   document.documentElement.removeAttribute('data-locked');
-  sessionStorage.setItem('ig-dash:auth', PASS_HASH);
+  sessionStorage.setItem('ig2-dash:auth', PASS_HASH);
 }
 function lock(){
-  sessionStorage.removeItem('ig-dash:auth');
+  sessionStorage.removeItem('ig2-dash:auth');
   document.documentElement.setAttribute('data-locked','1');
   document.getElementById('gatePass').value = '';
   document.getElementById('gateErr').textContent = '';
   document.getElementById('gatePass').focus();
 }
-if(sessionStorage.getItem('ig-dash:auth') === PASS_HASH){
+if(sessionStorage.getItem('ig2-dash:auth') === PASS_HASH){
   document.documentElement.removeAttribute('data-locked');
 } else {
   document.getElementById('gatePass').focus();
@@ -544,7 +544,7 @@ document.getElementById('gateForm').addEventListener('submit', e => {
 });
 
 /* ============ estado ============ */
-const KEY = 'ig-dash-agtaxtech-v1';
+const KEY = 'ig2-dash-agtaxtech-v1';
 /* Estrutura inicial, sem números — os dados são inseridos pelo formulário
    e ficam salvos apenas no navegador de quem acessa. */
 const SEED = ['Abril','Maio','Junho','Julho'].map(mes => ({
@@ -876,7 +876,7 @@ $('#exportBtn').addEventListener('click', ()=>{
   const blob = new Blob([JSON.stringify(data,null,2)], {type:'application/json'});
   const a = document.createElement('a');
   a.href = URL.createObjectURL(blob);
-  a.download = 'dashboard-instagram.json';
+  a.download = 'dashboard-instagram-conta2.json';
   a.click(); URL.revokeObjectURL(a.href);
 });
 $('#importBtn').addEventListener('click', ()=> $('#importFile').click());
